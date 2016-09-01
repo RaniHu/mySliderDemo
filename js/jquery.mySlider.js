@@ -13,7 +13,7 @@
                 autoSlide: false,
                 speed: "1500",
                 autoSlideSpeed: "2000",
-                selfAdaptive:true
+                selfAdaptive: true
             };
             var settings = $.extend(defaults, options);
             var _this = $(this);
@@ -40,31 +40,64 @@
 
 
             //适配移动端
-            var screenW=$(window).width();
-            if(settings.selfAdaptive&&screenW<=imgWidth){
+            var screenW = $(window).width();
+            if (settings.selfAdaptive && screenW <= imgWidth) {
                 forMobile();
             }
 
-            function forMobile(){
+            function forMobile() {
                 _this.css({
-                    width:screenW,
-                    height:imgHeight/(imgWidth/screenW),
+                    width: screenW,
+                    height: imgHeight / (imgWidth / screenW),
                     overflow: "hidden"
                 });
                 _this.find("ul.slide-image li a img").css({
-                    width:screenW,
-                    height:imgHeight/(imgWidth/screenW)
+                    width: screenW,
+                    height: imgHeight / (imgWidth / screenW)
                 });
+                _this.find("div.slide-btn").css("display","none");
             }
 
             slideUl.width(imgWidth * 5);
+
+            //手指触摸屏幕
+            var startX = 0;
+            var startY = 0;
+            var endX = 0;
+            var endY = 0;
+            document.addEventListener('touchstart', function (event) {
+                startX = event.touches[0].pageX;
+                startY = event.touches[0].pageY;
+            });
+            //手指离开屏幕
+            document.addEventListener('touchend', function (event) {
+                endX = event.changedTouches[0].pageX;
+
+                var disX = endX - startX;
+                if (Math.abs(disX) < 15) {
+                    return;
+                }
+
+                //向右滑动
+                if (disX > 0) {
+                    imgIndex--;
+                    chooseAnimate();
+                }
+                //向左滑动
+                else {
+                    imgIndex++;
+                    chooseAnimate();
+                }
+
+            });
+
 
             //淡入淡出效果样式
             if (settings.animate == "fadeIn") {
                 slideUl.css({
                     position: 'relative',
                     width: imgWidth,
-                    height:imgHeight
+                    height: imgHeight
                 });
                 imageLis.css({
                     position: 'absolute',
@@ -88,9 +121,9 @@
 
             //为轮播图片自动添加相应圆圈按钮个数
             var imgLength = imageLis.length;                                    //轮播图片的长度(比索引值大1)
-            var curImgLength=imgLength;
+            var curImgLength = imgLength;
             if (settings.animate == "slide") {
-               curImgLength=curImgLength-1;
+                curImgLength = curImgLength - 1;
             }
             for (var i = 0; i < curImgLength; i++) {
                 var li = "<li></li>";
@@ -174,10 +207,10 @@
 
             //选择滑动动画效果
             function slide() {
-                if(settings.selfAdaptive==true&&screenW<=imgWidth){
-                    imgWidth=screenW;
-                }else{
-                    imgWidth=_this.find("ul.slide-image li a img").width();
+                if (settings.selfAdaptive == true && screenW <= imgWidth) {
+                    imgWidth = screenW;
+                } else {
+                    imgWidth = _this.find("ul.slide-image li a img").width();
                 }
                 if (imgIndex == imgLength) {
                     slideUl.css({left: 0});

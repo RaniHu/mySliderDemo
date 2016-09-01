@@ -4,7 +4,7 @@ body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, table, td, dl, dt, dd, img, d
   margin: 0; }
 
 body {
-  font-family: "Microsoft YaHei", tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif;
+  font-family: "Microsoft YaHei", tahoma, arial, '\5b8b\4f53', sans-serif;
   background: url("../img/bg.png") repeat; }
 
 ul {
@@ -118,4 +118,4 @@ img {
   .header {
     width: 300px; } }
 
-/*# sourceMappingURL=myslider.css.map */
+/*# sourceMappingURL=mySlider.css.map */
